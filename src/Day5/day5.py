@@ -23,9 +23,7 @@ with open('day5.txt', 'r') as f:
             num_to_move, move_from, move_to = [int(s) for s in re.split("move | from | to ", line)[1:]]
             stack_from = stacks[move_from - 1]
             stack_to = stacks[move_to - 1]
-            stack_to += stack_from[len(stack_from) - 1:len(stack_from) - num_to_move - 1:-1] \
-                if len(stack_from) > num_to_move \
-                else stack_from[::-1]
+            stack_to += stack_from[len(stack_from) - num_to_move:]
             stack_from = stack_from[:len(stack_from) - num_to_move]
             stacks[move_from - 1] = stack_from
 
