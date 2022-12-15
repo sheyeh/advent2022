@@ -1,7 +1,8 @@
 import re
-
 from files import File, Directory
 
+FILESYSTEM_SIZE = 70000000
+UNUSED_SPACE = 30000000
 FILE_MATCH = re.compile("(\\d*) (.*)")
 path: list[Directory] = []
 directories = []
@@ -20,9 +21,7 @@ with open('day7.txt', 'r') as f:
             if directory:
                 directory.add_subdirectory(_dir)
             directory = _dir
-        elif line.startswith("$ ls"):
-            continue
-        elif line.startswith("dir "):
+        elif line.startswith("$ ls") or line.startswith("dir "):
             continue
         else:
             p = FILE_MATCH.match(line)
@@ -34,4 +33,8 @@ with open('day7.txt', 'r') as f:
 
 sizes = [directory.size() for directory in directories]
 result = sum(size for size in sizes if size < 100000)
-print(result)
+print("Part 1:", result)
+
+currently_unused = FILESYSTEM_SIZE - path[0].size()
+smallest_candidate = min(size for size in sizes if currently_unused + size > UNUSED_SPACE)
+print("Part 2:", smallest_candidate)
