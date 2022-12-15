@@ -18,7 +18,7 @@ with open('day7.txt', 'r') as f:
             path.append(_dir)
             directories.append(_dir)
             if directory:
-                directory.addSubdirectory(_dir)
+                directory.add_subdirectory(_dir)
             directory = _dir
         elif line.startswith("$ ls"):
             continue
@@ -29,7 +29,7 @@ with open('day7.txt', 'r') as f:
             file_size = int(p.group(1))
             file_name = p.group(2)
             file = File(file_name, file_size)
-            directory.addFile(file)
+            directory.add_file(file)
 
 
 sizes = [directory.size() for directory in directories]
