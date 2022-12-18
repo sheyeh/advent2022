@@ -1,6 +1,7 @@
 import numpy
 
-tail_pos = [0, 0]
+tail_pos = [[0, 0] for _ in range(9)]
+# can make the head be the first knot, but leave it like this
 head_pos = [0, 0]
 MOVE = {
     "U": [1, 0],
@@ -8,7 +9,8 @@ MOVE = {
     "L": [0, -1],
     "R": [0, 1]
 }
-covered = {}
+covered_0 = {}
+covered_8 = {}
 
 
 def get_closer(x, y):
@@ -23,7 +25,11 @@ with open('day9.txt', 'r') as f:
         for d in range(int(distance)):
             head_pos[0] += move[0]
             head_pos[1] += move[1]
-            tail_pos = get_closer(tail_pos, head_pos)
-            covered[str(tail_pos)] = 1
+            tail_pos[0] = get_closer(tail_pos[0], head_pos)
+            for k in range(1, 9):
+                tail_pos[k] = get_closer(tail_pos[k], tail_pos[k - 1])
+            covered_0[str(tail_pos[0])] = 1
+            covered_8[str(tail_pos[8])] = 1
 
-print(len(covered))
+print("Part 1:", len(covered_0))
+print("Part 2:", len(covered_8))
