@@ -1,3 +1,4 @@
+import math
 import re
 from monkey_classes import Monkey, Operation
 
@@ -23,6 +24,10 @@ with open('day11.txt', 'r') as f:
         throw_false[number] = if_false
         m += 1
 
+p = math.prod([monkeys[m].test for m in monkeys])
+for m in monkeys:
+    monkeys[m].set_p(p)
+
 for k, v in throw_true.items():
     monkeys[k].set_if_true(monkeys[v])
 
@@ -30,7 +35,7 @@ for k, v in throw_false.items():
     monkeys[k].set_if_false(monkeys[v])
 
 
-for _ in range(20):
+for r in range(10000):
     for m in monkeys:
         monkeys[m].process()
 

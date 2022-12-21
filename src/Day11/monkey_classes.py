@@ -7,6 +7,7 @@ class Monkey:
         self.test = test
         self.if_true = None
         self.if_false = None
+        self.p = 1
 
     def set_if_true(self, if_true):
         self.if_true = if_true
@@ -14,11 +15,14 @@ class Monkey:
     def set_if_false(self, if_false):
         self.if_false = if_false
 
+    def set_p(self, p):
+        self.p = p
+
     def process(self):
         while self.queue:
             self.inspections += 1
             item_value = self.queue.pop(0)
-            new_item_value = int(self.operation.next_value(item_value) / 3)
+            new_item_value = self.operation.next_value(item_value) % self.p
             next_monkey = self.if_false if new_item_value % self.test else self.if_true
             next_monkey.queue.append(new_item_value)
 
