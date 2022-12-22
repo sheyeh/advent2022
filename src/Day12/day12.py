@@ -28,7 +28,7 @@ def add_edge(i1, j1, i2, j2):
         e1 = grid[i1][j1]
         e2 = grid[i2][j2]
         if ord(e2) - ord(e1) <= 1:
-            graph.add_edge((i1, j1), (i2, j2), 1)
+            graph.add_edge((i2, j2), (i1, j1), 1)
 
 
 for i in range(N):
@@ -38,5 +38,8 @@ for i in range(N):
         add_edge(i, j, i, j-1)
         add_edge(i, j, i, j+1)
 
-d = DijkstraSPF(graph, S)
-print(d.get_distance(E))
+d = DijkstraSPF(graph, E)
+print("Part 1:", d.get_distance(S))
+
+trail = min(d.get_distance((i, j)) for i in range(N) for j in range(M) if grid[i][j] == "a")
+print("Part 2:", trail)
